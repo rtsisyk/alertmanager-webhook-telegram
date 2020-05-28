@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 import telegram
 import logging
 import json
@@ -23,8 +25,6 @@ def postAlertmanager():
 
     content = json.loads(request.get_data())
     pprint.pprint(content)
-    with open("Output.txt", "w") as text_file:
-        text_file.write("{0}".format(content))
     try:
         for alert in content['alerts']:
             message = "Status: %s\n" % alert['status']
@@ -60,5 +60,5 @@ def postAlertmanager():
 
 
 if __name__ == '__main__':
-    logging.basicConfig(filename='flaskAlert.log', level=logging.INFO)
+    logging.basicConfig(stream=sys.stdout, level=logging.DEBUG)
     app.run(host='0.0.0.0', port=9119)
